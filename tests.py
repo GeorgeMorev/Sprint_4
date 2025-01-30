@@ -1,3 +1,5 @@
+import pytest
+
 from main import BooksCollector
 
 # класс TestBooksCollector объединяет набор тестов, которыми мы покрываем наше приложение BooksCollector
@@ -22,3 +24,21 @@ class TestBooksCollector:
 
     # напиши свои тесты ниже
     # чтобы тесты были независимыми в каждом из них создавай отдельный экземпляр класса BooksCollector()
+    # Установление жанра книги и получение жанра по имени книги
+    @pytest.mark.parametrize('name, genre', [('Легенды Невского проспекта', 'Комедии')])
+    def test_set_book_genre(self, name, genre):
+        collector = BooksCollector()
+        collector.add_new_book('Легенды Невского проспекта')
+        collector.set_book_genre('Легенды Невского проспекта', 'Комедии')
+        assert 'Комедии' in collector.get_book_genre('Легенды Невского проспекта')
+
+    # Получение списка книг по определённому жанру
+    @pytest.mark.parametrize('name, genre', [
+        ("Клерки", 'Комедии'),
+        ("Новые парни турбо", 'Комедии'),
+        ("Кунг Фьюри", 'Комедии')])
+    def test_get_books_with_specific_genre(self, name, genre):
+        collector = BooksCollector()
+        collector.add_new_book(name)
+        collector.set_book_genre(name, genre)
+        assert name in collector.get_books_with_specific_genre('Комедии')
