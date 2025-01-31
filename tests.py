@@ -24,6 +24,7 @@ class TestBooksCollector:
 
     # напиши свои тесты ниже
     # чтобы тесты были независимыми в каждом из них создавай отдельный экземпляр класса BooksCollector()
+
     # Установление жанра книги и получение жанра по имени книги
     @pytest.mark.parametrize('name, genre', [('Легенды Невского проспекта', 'Комедии')])
     def test_set_book_genre(self, name, genre):
@@ -42,3 +43,16 @@ class TestBooksCollector:
         collector.add_new_book(name)
         collector.set_book_genre(name, genre)
         assert name in collector.get_books_with_specific_genre('Комедии')
+
+    #Получение словаря books_genre
+    @pytest.mark.parametrize('name, genre', [
+        ("Клерки", 'Комедии'),
+        ("Новые парни турбо", 'Комедии'),
+        ("Кунг Фьюри", 'Комедии')])
+    def test_get_books_genre(self, name, genre):
+        collector = BooksCollector()
+        collector.add_new_book(name)
+        collector.set_book_genre(name, genre)
+        books_genre = collector.get_books_genre()  # Получаем словарь {книга: жанр}
+        assert name in books_genre  # Проверяем, что книга есть в словаре
+        assert books_genre[name] == genre  # Проверяем, что у книги правильный жанр
