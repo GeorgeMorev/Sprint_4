@@ -69,7 +69,7 @@ class TestBooksCollector:
         books_list = collector.get_books_for_children()
         assert name in books_list
 
-    #Добавляем книгу в избранное и получаем списак избранных книг
+    #Добавляем книгу в избранное и получаем список избранных книг
     @pytest.mark.parametrize('name', ["Клерки", "Новые парни турбо", "Кунг Фьюри"])
     def test_add_book_in_favorites(self, name):
         collector = BooksCollector()
