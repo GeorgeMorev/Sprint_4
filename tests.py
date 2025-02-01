@@ -27,7 +27,7 @@ class TestBooksCollector:
 
     # Установление жанра книги и получение жанра по имени книги
     @pytest.mark.parametrize('name, genre', [('Легенды Невского проспекта', 'Комедии')])
-    def test_set_book_genre(self, name, genre):
+    def test_set_book_genre_and_get_book_genre(self, name, genre):
         collector = BooksCollector()
         collector.add_new_book('Легенды Невского проспекта')
         collector.set_book_genre('Легенды Невского проспекта', 'Комедии')
@@ -69,12 +69,12 @@ class TestBooksCollector:
         books_list = collector.get_books_for_children()
         assert name in books_list
 
-    #Добавляем книгу в избранное и получаем список избранных книг
+    #Добавление книги в избранное и удаление книги из избранного
     @pytest.mark.parametrize('name', ["Клерки", "Новые парни турбо", "Кунг Фьюри"])
-    def test_add_book_in_favorites(self, name):
+    def test_add_book_in_favorites_and_delete_book_from_favorites(self, name):
         collector = BooksCollector()
         collector.add_new_book(name)
         collector.add_book_in_favorites(name)
-        books_in_favorites = collector.get_list_of_favorites_books()
-        assert name in books_in_favorites
-
+        assert name in collector.get_list_of_favorites_books()
+        collector.delete_book_from_favorites(name)
+        assert name not in collector.get_list_of_favorites_books()
